@@ -22,13 +22,14 @@
 #	1: Necessary text for each command
 #
 # *Implementation does not implement #9*
+# *Implementation has support for invalid inputs*
 
 
 RUNNING=1
 
 while [ $RUNNING -eq 1 ]
 do
-
+	#MAIN MENU
 	clear
 	date
 	echo "------------------------------------------------------"
@@ -43,15 +44,23 @@ do
 	echo "7. My disk usage"
 	echo "8. My home file-tree"
 	echo "9. Process operations"
-	echo "10. Exit (done)"
+	echo "10. Exit"
 	
 	read -p "Enter your choice [ 1 - 10 ] " USER_INPUT
 	
-	
+	#No Input
 	if [ ${#USER_INPUT} -eq 0 ]
-	then 
+	then
+		clear
+		echo "------------------------------------------------------"
+		echo "  ...Oops  "
+		echo "------------------------------------------------------"
+		echo
 		echo "No input received"
-		read -p "press enter to continue" USER_INPUT
+		echo
+		read -p "press [Enter] to continue" USER_INPUT
+		
+	#SYSTEM INFORMATION
 	elif [ $USER_INPUT -eq 1 ]
 	then
 		clear
@@ -63,6 +72,7 @@ do
 		echo
 		read -p "Press [Enter] to continue" USER_INPUT
 		
+	#HOSTNAME AND DNS INFORMATION
 	elif [ $USER_INPUT -eq 2 ]
 	then
 		clear
@@ -76,6 +86,8 @@ do
 		echo "DNS name servers (DNS IP) : " $(grep "nameserver" /etc/resolv.conf | awk '{print $NF}')
 		echo
 		read -p "Press [Enter] to continue" USER_INPUT
+		
+	#NETWORK INFORMATION
 	elif [ $USER_INPUT -eq 3 ]
 	then
 		clear
@@ -95,6 +107,8 @@ do
 		netstat -i
 		echo
 		read -p "Press [Enter] to continue" USER_INPUT
+		
+	#WHO IS ONLINE
 	elif [ $USER_INPUT -eq 4 ]
 	then
 		clear
@@ -104,6 +118,8 @@ do
 		who -H
 		echo
 		read -p "Press [Enter] to continue" USER_INPUT
+		
+	#LIST OF LAST LOGGED IN USERS
 	elif [ $USER_INPUT -eq 5 ]
 	then
 		clear
@@ -113,6 +129,8 @@ do
 		last | awk 'NR<16'
 		echo
 		read -p "Press [Enter] to continue" USER_INPUT
+		
+	#PUBLIC IP ADDRESS
 	elif [ $USER_INPUT -eq 6 ]
 	then
 		clear
@@ -122,6 +140,8 @@ do
 		dig +short myip.opendns.com @resolver1.opendns.com
 		echo
 		read -p "Press [Enter] to continue" USER_INPUT
+		
+	#DISK USAGE
 	elif [ $USER_INPUT -eq 7 ]
 	then
 		clear
@@ -131,6 +151,8 @@ do
 		df -h | awk '{print $5, $1}'
 		echo
 		read -p "Press [Enter] to continue" USER_INPUT
+		
+	#FILETREE FROM PROJ1
 	elif [ $USER_INPUT -eq 8 ]
 	then
 		clear
@@ -142,6 +164,8 @@ do
 		echo "***Finished: tree in \"filetree.html\"***"
 		echo
 		read -p "Press [Enter] to continue" USER_INPUT
+		
+	#PROCESS MANAGEMENT (NOT IMPLEMENTED)
 	elif [ $USER_INPUT -eq 9 ]
 	then
 		clear
@@ -152,17 +176,23 @@ do
 		echo "This function was not implemented"
 		echo
 		read -p "Press [Enter] to continue" USER_INPUT
+		
+	#EXIT
 	elif [ $USER_INPUT -eq 10 ]
 	then
 		RUNNING=0
 		clear
 		echo "Thank you, have a wonderful day!"
+		
+	#INVALID INPUT
 	else
 		clear
 		echo "------------------------------------------------------"
 		echo "  Process operations  "
 		echo "------------------------------------------------------"
+		echo
 		echo "Invalid Input: " $USER_INPUT
+		echo
 		read -p "Press [Enter] to continue" USER_INPUT
 	
 	fi
